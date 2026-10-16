@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
@@ -23,11 +24,12 @@ class MainApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
   final String title;
 
+  const MyHomePage({super.key, required this.title});
+
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<StatefulWidget> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -42,7 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     // Set nilai awal status koneksi sebagai true (terhubung)
@@ -50,8 +51,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Memanggil fungsi pengecekan koneksi internet dan mendengarkan perubahan koneksi setelah selesai
     _initConnectionStatus().then((_) {
-      _connectivitySubscription =
-          _connectivity.onConnectivityChanged.listen((result) {
+      _connectivitySubscription = _connectivity.onConnectivityChanged.listen((
+        result,
+      ) {
         setState(() {
           isConnected = !result.contains(ConnectivityResult.none);
         });
@@ -61,8 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
+
     // Batalkan langganan saat widget dihancurkan untuk menghindari kebocoran memori
     _connectivitySubscription.cancel();
   }
@@ -80,8 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
         child: AnimatedSwitcher(
